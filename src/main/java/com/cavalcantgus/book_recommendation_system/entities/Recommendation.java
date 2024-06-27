@@ -11,26 +11,28 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity // Mapeada como entidade JPA
 @Table(name = "recommendation")
 public class Recommendation {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID
 	private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
+	 
+	@ManyToOne // Relacionamento bidirecional com User
+	@JoinColumn(name = "user_id") // Um objeto User está associado a vários objetos Recommendation
 	private User user;
 	
-	@ManyToOne
-	@JoinColumn(name = "book_id")
+	@ManyToOne // Relacionamento bidirecional com Book 
+	@JoinColumn(name = "book_id") // Um objeto Book está associado a vários objetos Recommendation
 	private Book book;
 	private Double score;
 	private Timestamp created_at;
 	
+	// Construtor padrão
 	public Recommendation() {}
 	
+	// Construtor parametrizado
 	public Recommendation(User user, Book book, Double score) {
 		this.user = user;
 		this.book = book;

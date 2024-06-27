@@ -10,23 +10,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity // Mapeada como entidade JPA
 @Table(name = "genre")
 public class Genre {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID
 	private Long id;
 	private String name;
 	private String description;
 	
-	@OneToMany(mappedBy = "genre")
-	private Set<Book> book;
+	@OneToMany(mappedBy = "genre") // Relacionamento bidirecional com Book
+	private Set<Book> book;		   // Um Book pode estar associado a somente um Genre
 	private Timestamp created_at;
 	private Timestamp updated_at;
 	
+	// Construtor padrão
 	public Genre() {}
 	
+	// Construtor parametrizado
 	public Genre(String name, String description) {
 		this.name = name;
 		this.description = description;
@@ -34,6 +36,7 @@ public class Genre {
 		this.updated_at = created_at;
 	}
 
+	// Getters & Setters
 	public Long getId() {
 		return id;
 	}

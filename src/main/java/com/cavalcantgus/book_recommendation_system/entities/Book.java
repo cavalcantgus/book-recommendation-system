@@ -13,36 +13,38 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity // Mapeada como entidade JPA
 @Table(name = "book")
 public class Book {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID
 	private Long id;
 	private String title;
 	
-	@ManyToOne
-	@JoinColumn(name = "author_id", nullable = false)
+	@ManyToOne // Relacionamento bidirecional com Author
+	@JoinColumn(name = "author_id", nullable = false) // Um objeto Author está associado a vários objetos Book
 	private Author author;
 	private String summary;
 	private String isbn;
 	private Date publicationDate;
 	
-	@OneToMany(mappedBy = "book")
-	private Set<Recommendation> recommendation;
+	@OneToMany(mappedBy = "book")  // Relacionamento bidirecional com Recommendation
+	private Set<Recommendation> recommendation; // Um objeto Book está associado a vários Recommendation
 	
-	@OneToMany(mappedBy = "book")
-	private Set<Rating> rating;
+	@OneToMany(mappedBy = "book") // Relacionamento bidirecional com Recommendation
+	private Set<Rating> rating; // Um objeto Book está associado a vários Rating
 	
-	@ManyToOne
-	@JoinColumn(name = "genre_id", nullable = false)
+	@ManyToOne // Relacionamento bidirecional com Genre
+	@JoinColumn(name = "genre_id", nullable = false) // Um objeto Genre está associado a vários objetos Book
 	private Genre genre;
 	private Timestamp created_at;
 	private Timestamp updated_at;
 	
+	// Construtor padrão
 	public Book() {}
 	
+	// Construtor parametrizado
 	public Book(String title, String summary, Author author, String isbn, Date publicationDate, Genre genre) {
 		this.title = title;
 		this.summary = summary;
@@ -54,6 +56,7 @@ public class Book {
 		this.updated_at = created_at;
 	}
 	
+	// Getters & Setters
 	public Long getId() {
 		return id;
 	}

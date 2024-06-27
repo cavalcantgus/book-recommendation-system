@@ -11,31 +11,38 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity // Mapeada como entidade JPA
 @Table(name = "user")
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID 
 	private Long id;
 	
 	private String username;
 	private String email;
 	private String password;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user") 
 	private Set<Recommendation> recommendation;
 	
 	@OneToMany(mappedBy = "user")
 	private Set<Rating> rating;
 	
-	@OneToOne(mappedBy = "user")
+	/*
+	 * Relacionamento bidirecional com Recommendation e Rating, onde um User pode
+	 * estar associado a vários objetos Recommendatione e Rating
+	*/
+	
+	@OneToOne(mappedBy = "user") // Relacionamento bidirecional com UserPreference de 1 para 1
 	private UserPreferences userPreferences;
 	private Timestamp created_at;
 	private Timestamp updated_at;
 	
+	// Construtor padrão
 	public User() {}
 	
+	// Construtor parametrizado
 	public User(String username, String email, String password) {
 		this.username = username;
 		this.email = email;
@@ -43,7 +50,8 @@ public class User {
 		this.created_at = new Timestamp(System.currentTimeMillis());
 		this.updated_at = created_at;
 	}
-
+	
+	// Getters & Setters
 	public Long getId() {
 		return id;
 	}

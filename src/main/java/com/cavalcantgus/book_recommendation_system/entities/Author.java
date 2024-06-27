@@ -11,26 +11,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity // Mapeada como entidade JPA
 @Table(name = "author")
 public class Author {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID
 	private Long id;
 	
 	private String name;
 	private String description;
 	
-	@OneToMany(mappedBy = "author")
-	private Set<Book> books;
+	@OneToMany(mappedBy = "author") // Relacionamento bidirecional com Book. Um autor pode ter 
+	private Set<Book> books; 		// vários livros
 	
 	private Date dateOfBirth;
 	private Timestamp created_at;
 	private Timestamp updated_at;
 	
+	
+	// Construtor padrão
 	public Author() {}
 	
+	// Construtor parametrizado
 	public Author(String name, String description, Date dateOfBirth) {
 		this.name = name;
 		this.description = description;
@@ -39,6 +42,7 @@ public class Author {
 		this.updated_at = created_at;
 	}
 	
+	// Getters & Setters
 	public Long getId() {
 		return id;
 	}

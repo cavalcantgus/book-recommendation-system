@@ -10,27 +10,29 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity // Mapeada como entidade JPA
 @Table(name = "rating")
 public class Rating {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID
 	private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@ManyToOne // Relacionamento bidirecional com User
+	@JoinColumn(name = "user_id") // Um objeto User está associado a vários objetos Rating
 	private User user;
 	
-	@ManyToOne
-	@JoinColumn(name = "book_id")
+	@ManyToOne // Relacionamento bidirecional com Book
+	@JoinColumn(name = "book_id") // Um objeto Book está associado a vários objetos Rating
 	private Book book;
 	private Integer rating;
 	private String review;
 	private Timestamp created_at;
 	
+	// Construtor padrão
 	public Rating() {}
 	
+	// Construtor parametrizado
 	public Rating(User user, Book book, Integer rating, String review) {
 		this.user = user;
 		this.book = book;
@@ -39,6 +41,7 @@ public class Rating {
 		this.created_at = new Timestamp(System.currentTimeMillis());
 	}
 
+	// Getters & Setters
 	public Long getId() {
 		return id;
 	}

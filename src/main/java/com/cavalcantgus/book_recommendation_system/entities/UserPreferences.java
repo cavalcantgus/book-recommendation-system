@@ -11,26 +11,28 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity // Mapeada como entidade JPA
 @Table(name = "userpreferences")
 public class UserPreferences {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID
 	private Long id;
 	
-	@OneToOne
-	@JoinColumn(name = "user_id", unique = true)
-	private User user;
+	@OneToOne // Relacionamento bidirecional com User
+	@JoinColumn(name = "user_id", unique = true) // Campo único e relacionamento 1 para 1
+	private User user;							
 	
-	@ManyToOne
-	@JoinColumn(name = "genre_id")
+	@ManyToOne // Relacionamento bidirecional com Genre
+	@JoinColumn(name = "genre_id") // Um objeto Genre está associado a vários objetos UserPreferences
 	private Genre genre;
 	private Double preferenceScore;
 	private Timestamp created_at;
 	
+	// Construtor padrão
 	public UserPreferences() {}
 	
+	// Construtor parametrizado
 	public UserPreferences(User user, Genre genre, Double preferenceScore) {
 		this.user = user;
 		this.genre = genre;
@@ -38,6 +40,7 @@ public class UserPreferences {
 		this.created_at = new Timestamp(System.currentTimeMillis());
 	}
 	
+	// Getters & Setters
 	public Long getId() {
 		return id;
 	}
