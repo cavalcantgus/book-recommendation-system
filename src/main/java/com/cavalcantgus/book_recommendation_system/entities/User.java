@@ -12,7 +12,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity // Mapeada como entidade JPA
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User {
 	
 	@Id
