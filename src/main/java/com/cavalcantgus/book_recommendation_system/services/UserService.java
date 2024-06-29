@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import com.cavalcantgus.book_recommendation_system.entities.User;
 import com.cavalcantgus.book_recommendation_system.exceptions.ResourceNotFoundException;
 import com.cavalcantgus.book_recommendation_system.repositories.UserRepository;
+import com.cavalcantgus.book_recommendation_system.security.CustomPasswordEncoder;
 
 @Service
 public class UserService {
 	
 	@Autowired 
 	private UserRepository repository;
+	
+	@Autowired
+	private CustomPasswordEncoder encoder;
 	
 	public List<User> findAll(){
 		return repository.findAll();
@@ -28,6 +32,7 @@ public class UserService {
 	}
 	
 	public User insert(User user) {
+		user.setPassword(encoder.passwordEnconder().encode(user.getPassword()));
 		return repository.save(user);
 	}
 	
