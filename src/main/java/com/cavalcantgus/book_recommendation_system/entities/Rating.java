@@ -8,74 +8,47 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity // Mapeada como entidade JPA
+@Entity
 @Table(name = "rating")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Rating {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Setter(AccessLevel.NONE)
 	private Long id;
-	
+
 	@ManyToOne // Relacionamento bidirecional com User
 	@JoinColumn(name = "user_id") // Um objeto User está associado a vários objetos Rating
 	private User user;
-	
+
 	@ManyToOne // Relacionamento bidirecional com Book
 	@JoinColumn(name = "book_id") // Um objeto Book está associado a vários objetos Rating
 	private Book book;
 	private Integer rating;
 	private String review;
-	private Timestamp created_at;
-	
-	// Construtor padrão
-	public Rating() {}
-	
+	private Timestamp createdAt;
+
 	// Construtor parametrizado
 	public Rating(User user, Book book, Integer rating, String review) {
 		this.user = user;
 		this.book = book;
 		this.rating = rating;
 		this.review = review;
-		this.created_at = new Timestamp(System.currentTimeMillis());
 	}
 
-	// Getters & Setters
-	public Long getId() {
-		return id;
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Timestamp(System.currentTimeMillis());
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public Book getBook() {
-		return book;
-	}
-
-	public Integer getRating() {
-		return rating;
-	}
-
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
-
-	public String getReview() {
-		return review;
-	}
-
-	public void setReview(String review) {
-		this.review = review;
-	}
-
-	public Timestamp getCreated_at() {
-		return created_at;
-	}
-
-	public void setCreated_at(Timestamp created_at) {
-		this.created_at = created_at;
-	}
-	
 }

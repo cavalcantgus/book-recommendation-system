@@ -14,104 +14,66 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity // Mapeada como entidade JPA
+@Entity
 @Table(name = "\"user\"")
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Geração automática de ID 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Setter(AccessLevel.NONE)
 	private Long id;
-	
+
 	private String username;
 	private String email;
 	private String password;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "user") 
-	private Set<Recommendation> recommendation;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
+	@Setter(AccessLevel.NONE)
+	private Set<Recommendation> recommendation;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	@Setter(AccessLevel.NONE)
 	private Set<Rating> rating;
-	
+
 	/*
 	 * Relacionamento bidirecional com Recommendation e Rating, onde um User pode
 	 * estar associado a vários objetos Recommendatione e Rating
-	*/
-	
+	 */
+
 	@JsonIgnore
 	@OneToOne(mappedBy = "user") // Relacionamento bidirecional com UserPreference de 1 para 1
 	private UserPreferences userPreferences;
-	private Timestamp created_at;
-	private Timestamp updated_at;
-	
-	// Construtor padrão
-	public User() {}
-	
+
+	@Setter(AccessLevel.NONE)
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
+
 	// Construtor parametrizado
 	public User(String username, String email, String password) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
 	}
-	
+
 	@PrePersist
 	protected void onCreate() {
-		this.created_at = new Timestamp(System.currentTimeMillis());
-		this.updated_at = created_at;
+		this.createdAt = new Timestamp(System.currentTimeMillis());
+		this.updatedAt = createdAt;
 	}
-	
+
 	@PreUpdate
 	protected void onUpdate() {
-		this.updated_at = new Timestamp(System.currentTimeMillis());
-	}
-	// Getters & Setters
-	public Long getId() {
-		return id;
+		this.updatedAt = new Timestamp(System.currentTimeMillis());
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public Timestamp getCreatedAt() {
-		return created_at;
-	}
-	
-	public Timestamp getUpdatedAt() {
-		return updated_at;
-	}
-	
-	public void setUpdatedAt(Timestamp updated_at) {
-		this.updated_at = updated_at;	
-	}
-	
-	public Set<Rating> getRating(){
-		return rating;
-	}
-	
-	public Set<Recommendation> getRecommendation(){
-		return recommendation;
-	}
 }

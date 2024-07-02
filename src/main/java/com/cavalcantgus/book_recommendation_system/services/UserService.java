@@ -15,47 +15,46 @@ import com.cavalcantgus.book_recommendation_system.security.CustomPasswordEncode
 
 @Service
 public class UserService {
-	
-	@Autowired 
+
+	@Autowired
 	private UserRepository repository;
-	
+
 	@Autowired
 	private CustomPasswordEncoder encoder;
-	
-	public List<User> findAll(){
+
+	public List<User> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public User findById(Long id) {
 		Optional<User> user = repository.findById(id);
 		return user.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
-	
+
 	public User insert(User user) {
 		user.setPassword(encoder.passwordEnconder().encode(user.getPassword()));
 		return repository.save(user);
 	}
-	
+
 	public void deleteById(Long id) {
 		try {
-			if(repository.existsById(id)) {
+			if (repository.existsById(id)) {
 				repository.deleteById(id);
-			}else {
+			} else {
 				throw new ResourceNotFoundException(id);
 			}
 		} catch (DataIntegrityViolationException e) {
 			e.getMessage();
 		}
 	}
-	
+
 	public User update(Long id, User user) {
 		try {
-			if(repository.existsById(id)) {
+			if (repository.existsById(id)) {
 				User userTarget = repository.getReferenceById(id);
 				updateData(user, userTarget);
 				return repository.save(userTarget);
-			}
-			else {
+			} else {
 				throw new ResourceNotFoundException(id);
 			}
 		} catch (Exception e) {
@@ -68,8 +67,6 @@ public class UserService {
 		userTarget.setUsername(user.getUsername());
 		userTarget.setEmail(user.getEmail());
 		userTarget.setPassword(user.getPassword());
-		userTarget.setUpdatedAt(new Timestamp(System.currentTimeMillis()));	
+		userTarget.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
 	}
 }
-
-

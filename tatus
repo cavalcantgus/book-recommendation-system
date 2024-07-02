@@ -1,0 +1,23 @@
+[33mcommit 4aaea86a1d5e188cc2492884795369cdfb600d40[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: educodehub <educodehub@gmail.com>
+Date:   Fri Jun 28 18:28:14 2024 -0300
+
+    Creating UserService
+
+[33mcommit 9a288e7272382ca4c5053c06e73cd8fa26e0edfc[m
+Author: educodehub <educodehub@gmail.com>
+Date:   Fri Jun 28 14:28:15 2024 -0300
+
+    Creating JPA Repositories
+
+[33mcommit 5c531c9e277e8f04625b8a29aa6a1feda56b4b70[m
+Author: educodehub <educodehub@gmail.com>
+Date:   Thu Jun 27 14:41:19 2024 -0300
+
+    Commenting application entities
+
+[33mcommit 0f6d4f8573100adda068cd6e48e9cbe1075b7e9f[m
+Author: educodehub <educodehub@gmail.com>
+Date:   Thu Jun 27 13:58:04 2024 -0300
+
+    Project Created

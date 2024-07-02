@@ -10,19 +10,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-			http
-			
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http
+
 				// Make the endpoint public and authorize all requests to it
-				.authorizeHttpRequests((authz) -> authz
-					.requestMatchers("/**").permitAll())
-				
+				.authorizeHttpRequests((authz) -> authz.requestMatchers("/**").permitAll())
+
 				// Temporarily disabling CSRF
 				.csrf((csrf) -> csrf.disable()
-								
+
 				);
-			
-			return http.build();
+
+		return http.build();
 	}
 }

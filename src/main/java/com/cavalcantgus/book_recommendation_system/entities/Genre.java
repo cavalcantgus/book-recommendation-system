@@ -8,71 +8,50 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity // Mapeada como entidade JPA
+@Entity
 @Table(name = "genre")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Genre {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO) // Geração automática de ID
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Setter(AccessLevel.NONE)
 	private Long id;
 	private String name;
 	private String description;
-	
+
 	@OneToMany(mappedBy = "genre") // Relacionamento bidirecional com Book
-	private Set<Book> book;		   // Um Book pode estar associado a somente um Genre
-	private Timestamp created_at;
-	private Timestamp updated_at;
-	
-	// Construtor padrão
-	public Genre() {}
-	
+	@Setter(AccessLevel.NONE)
+	private Set<Book> book; // Um Book pode estar associado a somente um Genre
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
+
 	// Construtor parametrizado
 	public Genre(String name, String description) {
 		this.name = name;
 		this.description = description;
-		this.created_at = new Timestamp(System.currentTimeMillis());
-		this.updated_at = created_at;
+		this.updatedAt = createdAt;
 	}
 
-	// Getters & Setters
-	public Long getId() {
-		return id;
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Timestamp(System.currentTimeMillis());
+		this.updatedAt = createdAt;
 	}
 
-	public String getName() {
-		return name;
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = new Timestamp(System.currentTimeMillis());
 	}
-
-	public void setName(String name) {
-		this.name = name;
-		setUpdated_at(new Timestamp(System.currentTimeMillis()));
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-		setUpdated_at(new Timestamp(System.currentTimeMillis()));
-	}
-
-	public Set<Book> getBook() {
-		return book;
-	}
-
-	public Timestamp getCreated_at() {
-		return created_at;
-	}
-
-	public Timestamp getUpdated_at() {
-		return updated_at;
-	}
-
-	public void setUpdated_at(Timestamp updated_at) {
-		this.updated_at = updated_at;
-	}	
 
 }

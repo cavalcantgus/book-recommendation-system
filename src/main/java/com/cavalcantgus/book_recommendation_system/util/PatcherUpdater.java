@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class PatcherUpdater {
 
-	public <T> void applyPartialUpdate(T objSource, T objTarget) throws IllegalArgumentException, IllegalAccessException {
+	public <T> void applyPartialUpdate(T objSource, T objTarget)
+			throws IllegalArgumentException, IllegalAccessException {
 		Class<?> objClass = objSource.getClass();
 		Field[] objFields = objClass.getDeclaredFields();
-		
+
 		for (Field field : objFields) {
 			field.setAccessible(true);
 
