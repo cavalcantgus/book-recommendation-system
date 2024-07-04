@@ -4,6 +4,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +30,7 @@ import lombok.Setter;
 public class Book {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter(AccessLevel.NONE)
 	private Long id;
 	private String title;
@@ -39,10 +42,12 @@ public class Book {
 	private String isbn;
 	private Date publicationDate;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "book") // Relacionamento bidirecional com Recommendation
 	@Setter(AccessLevel.NONE)
 	private Set<Recommendation> recommendation; // Um objeto Book está associado a vários Recommendation
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "book") // Relacionamento bidirecional com Recommendation
 	@Setter(AccessLevel.NONE)
 	private Set<Rating> rating; // Um objeto Book está associado a vários Rating
@@ -50,7 +55,11 @@ public class Book {
 	@ManyToOne // Relacionamento bidirecional com Genre
 	@JoinColumn(name = "genre_id", nullable = false) // Um objeto Genre está associado a vários objetos Book
 	private Genre genre;
+
+	@Column(name = "created_at")
 	private Timestamp createdAt;
+
+	@Column(name = "updated_at")
 	private Timestamp updatedAt;
 
 	// Construtor parametrizado
