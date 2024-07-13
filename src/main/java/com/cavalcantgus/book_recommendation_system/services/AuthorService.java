@@ -14,8 +14,6 @@ import com.cavalcantgus.book_recommendation_system.exceptions.DatabaseException;
 import com.cavalcantgus.book_recommendation_system.exceptions.ResourceNotFoundException;
 import com.cavalcantgus.book_recommendation_system.repositories.AuthorRepository;
 
-import jakarta.persistence.EntityNotFoundException;
-
 @Service
 public class AuthorService {
 
@@ -36,6 +34,7 @@ public class AuthorService {
 
 	public Author insert(Author author) {
 		return repository.save(author);
+
 	}
 
 	public void delete(Long id) {
@@ -52,16 +51,15 @@ public class AuthorService {
 	}
 
 	public Author update(Long id, Author author) {
+
 		try {
-			if (repository.existsById(id)) {
-				Author updatedAuthor = updateData(id, author);
-				return repository.save(updatedAuthor);
-			} else {
-				throw new ResourceNotFoundException(id);
-			}
-		} catch (EntityNotFoundException e) {
+			repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+
+			Author updatedAuthor = updateData(id, author);
+			return repository.save(updatedAuthor);
+		} catch (ResourceNotFoundException e) {
 			logger.error("Error while updating author with ID " + id, e);
-			throw new ResourceNotFoundException(id);
+			throw e;
 		}
 	}
 
@@ -74,4 +72,5 @@ public class AuthorService {
 
 		return authorTarget;
 	}
+
 }
