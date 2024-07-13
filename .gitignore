@@ -34,6 +34,8 @@ build/
 
 # Arquivos de log
 *.log
+*.log.*
+logs/
 
 # Pasta bin
 bin/
