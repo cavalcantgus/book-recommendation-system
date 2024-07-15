@@ -38,7 +38,6 @@ public class Author {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "author") // Relacionamento bidirecional com Book. Um autor pode ter
-	@Setter(AccessLevel.NONE)
 	private Set<Book> books; // vários livros
 
 	private Date dateOfBirth;
