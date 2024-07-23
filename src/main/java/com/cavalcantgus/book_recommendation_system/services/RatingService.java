@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +14,15 @@ import com.cavalcantgus.book_recommendation_system.exceptions.DatabaseException;
 import com.cavalcantgus.book_recommendation_system.exceptions.ResourceNotFoundException;
 import com.cavalcantgus.book_recommendation_system.repositories.RatingRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class RatingService {
 
 	private final static Logger logger = LoggerFactory.getLogger(RatingService.class);
 
-	@Autowired
-	private RatingRepository repository;
+	private final RatingRepository repository;
 
 	public List<Rating> findAll() {
 		return repository.findAll();
