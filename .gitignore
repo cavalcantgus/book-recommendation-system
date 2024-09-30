@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+HELP.md
+=======
 # Arquivos de build do Maven
+>>>>>>> 5caed05241895feec07c518cd9e994a39816921e
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -31,6 +35,8 @@ build/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
+=======
 
 # Arquivos de log
 *.log
@@ -39,3 +45,4 @@ logs/
 
 # Pasta bin
 bin/
+>>>>>>> 5caed05241895feec07c518cd9e994a39816921e
